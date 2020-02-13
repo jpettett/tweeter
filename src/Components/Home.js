@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 let posts;
 class Home extends Component {
+  // Deletes Tweet
 	deleteTweet = id => {
 		console.log('id', id);
 		axios
@@ -19,10 +20,10 @@ class Home extends Component {
 		if (tweets !== null) {
 			posts = tweets.map(tweet => {
 				return (
-					<div>
+					<div key={tweet._id}>
 						<h1>{tweet.name}</h1>
 						<p>{tweet.tweet}</p>
-						<Link to="/edit">
+						<Link to="/edit" onClick={() => this.props.setId(tweet._id)}>
 							<button>Edit</button>
 						</Link>
 						<button onClick={() => this.deleteTweet(tweet._id)}>Delete</button>

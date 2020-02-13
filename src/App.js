@@ -12,7 +12,8 @@ class App extends Component {
 		this.state = {
 			tweets: [],
 			name: '',
-			newTweet: ''
+			newTweet: '',
+			id: ''
 		};
 	}
 	// handles name change //
@@ -42,8 +43,12 @@ class App extends Component {
 			.catch(err => {
 				console.error(err);
 			});
+  };
+  // set ID for Edit
+	setId = id => {
+		this.setState({ id: id });
+		console.log('yessssss');
 	};
-
 	// fetch api data from tweets api //
 	componentDidMount() {
 		const url = 'http://localhost:4000/tweets';
@@ -69,7 +74,9 @@ class App extends Component {
 						<Route
 							exact
 							path="/"
-							render={props => <Home {...props} tweets={this.state.tweets} />}
+							render={() => (
+								<Home tweets={this.state.tweets} setId={this.setId} />
+							)}
 						/>
 						<Route
 							path="/post"
@@ -84,7 +91,16 @@ class App extends Component {
 								/>
 							)}
 						/>
-						<Route path="/edit" render={() => <Edit />} />
+						<Route
+							path="/edit"
+							render={() => (
+								<Edit
+									newTweet={this.state.newTweet}
+									handleTweet={this.handleTweet}
+									id={this.state.id}
+								/>
+							)}
+						/>
 					</Switch>
 				</main>
 			</div>
