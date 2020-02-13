@@ -14,19 +14,19 @@ class App extends Component {
       newTweet: ''
     };
   }
-
+  // handles name change //
   handleName = e => {
     this.setState({
       name: e.target.value
     });
   };
-
+  // handles tweet change //
   handleTweet = e => {
     this.setState({
       newTweet: e.target.value
     });
   };
-
+  // submits value with axios and sets updated state //
   handleSubmit = e => {
     e.preventDefault();
     const name = this.state.name;
@@ -43,6 +43,7 @@ class App extends Component {
       });
   };
 
+  // fetch api data from tweets api //
   componentDidMount() {
     const url = 'http://localhost:4000/tweets';
     fetch(url)
@@ -67,7 +68,7 @@ class App extends Component {
             <Route
               exact
               path="/"
-              render={() => <Home tweets={this.state.tweets} />}
+              render={props => <Home {...props} tweets={this.state.tweets} />}
             />
             <Route
               path="/post"
@@ -78,6 +79,7 @@ class App extends Component {
                   handleTweet={this.handleTweet}
                   name={this.state.name}
                   newTweet={this.state.newTweet}
+                  deleteTweet={this.deleteTweet}
                 />
               )}
             />
